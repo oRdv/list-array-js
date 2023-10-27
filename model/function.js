@@ -15,32 +15,90 @@ const getListaDeEstados = function () {
 
     const infoEstados = {uf : array, quantidade}
 
-    return infoEstados
 
+    return infoEstados
 }
 
-const getDadosEstado = function(){
-    const siglaEstado = []
-    const descricaoEstado = []
-    const capitalEstado = []
-    const regiaoEstado = []
+const getDadosEstado = function (sigla) {
 
-    arrayEstado.forEach(function(infoEstado){
-        siglaEstado.push(infoEstado.sigla)
-        descricaoEstado.push(infoEstado.nome)
-        capitalEstado.push(infoEstado.capital)
-        regiaoEstado.push(infoEstado.regiao)
+    const filtro = sigla.toUpperCase()
+    const estados = jsonEstados.estadosCidades.estados
+
+    const descricaoEstado = {}
+
+    estados.forEach( function (estado) {
+
+        if(estado.sigla.includes(filtro)) {
+    
+            descricaoEstado.uf = estado.sigla
+            descricaoEstado.descricao = estado.nome
+            descricaoEstado.capital = estado.capital
+            descricaoEstado.regiao = estado.regiao
+        }
+
     })
 
-    const testando = {uf: siglaEstado, descricao: descricaoEstado, capital: capitalEstado, regiao: regiaoEstado }
+    console.log(descricaoEstado)
 
-    console.log(testando)
 
+}
+
+const getCapitalEstado = function (sigla) {
+
+    const regiao = sigla.toUpperCase()
+    const estados = jsonEstados.estadosCidades.estados
+
+    const descricaoCapital = {}
+
+    estados.forEach( function (estado) {
+
+        if(estado.sigla.includes(regiao)) {
+
+            descricaoCapital.uf = estado.sigla
+            descricaoCapital.descricao = estado.nome
+            descricaoCapital.capital = estado.capital
+        }
+
+    })
+
+    console.log(descricaoCapital)
 
 
 }
 
 
+const getEstadosRegiao = function (regiao) {
 
-getListaDeEstados();
-getDadosEstado();
+    const regiao = regiao.toUpperCase()
+    const estados = jsonEstados.estadosCidades.estados
+
+    const descricaoRegiao = {}
+    descricaoRegiao.regiao = regiao
+
+    const estadosRegioes = []
+
+    estados.forEach( function (estado){
+
+        if((estado.regiao.toUpperCase()).includes(regiao)){
+
+            let estadosRegiao = {     
+                uf: estado.sigla,
+                descricao: estado.nome,
+            }
+
+            estadosRegioes.push(estadosRegiao)
+
+        }
+    })
+
+    descricaoRegiao.estados = resultadoRegiao
+
+    console.log(descricaoRegiao)
+
+}
+
+getCapitalEstado('SP')
+getListaDeEstados()
+getDadosEstado('RJ')
+getEstadosRegiao('Sul')
+// console.log(getDadosEstado('BA'))
