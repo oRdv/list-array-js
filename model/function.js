@@ -38,7 +38,7 @@ const getDadosEstado = function (sigla) {
 
     })
 
-    console.log(descricaoEstado)
+    return descricaoEstado
 
 
 }
@@ -61,7 +61,7 @@ const getCapitalEstado = function (sigla) {
 
     })
 
-    console.log(descricaoCapital)
+    return descricaoCapital
 
 
 }
@@ -69,36 +69,59 @@ const getCapitalEstado = function (sigla) {
 
 const getEstadosRegiao = function (regiao) {
 
-    const regiao = regiao.toUpperCase()
+    const regiaos = regiao.toUpperCase()
     const estados = jsonEstados.estadosCidades.estados
-
     const descricaoRegiao = {}
-    descricaoRegiao.regiao = regiao
-
     const estadosRegioes = []
+    descricaoRegiao.regiao = regiaos
+    descricaoRegiao.estados = estadosRegioes
 
-    estados.forEach( function (estado){
+    estados.forEach( function (infoEstados){
 
-        if((estado.regiao.toUpperCase()).includes(regiao)){
+        if((infoEstados.regiao.toUpperCase()).includes(regiaos)){
 
-            let estadosRegiao = {     
-                uf: estado.sigla,
-                descricao: estado.nome,
-            }
+            let estadosRegiaoR = {}
 
-            estadosRegioes.push(estadosRegiao)
+           
+            estadosRegiaoR.uf =  infoEstados.sigla
+            estadosRegiaoR.descricao = infoEstados.nome
+            estadosRegioes.push(estadosRegiaoR)
 
         }
     })
 
-    descricaoRegiao.estados = resultadoRegiao
-
-    console.log(descricaoRegiao)
+    return descricaoRegiao
 
 }
 
-getCapitalEstado('SP')
-getListaDeEstados()
-getDadosEstado('RJ')
-getEstadosRegiao('Sul')
-// console.log(getDadosEstado('BA'))
+const getCidades = function (sigla) {
+    const estado = jsonEstados.estadosCidades.estados
+    let siglas = sigla.toUpperCase
+    let estadosCidades = {}
+    let cidade = []
+    estadosCidades.cidade = cidade
+
+
+    estado.forEach(function (infoEstados){
+        if (infoEstados.sigla.includes(siglas)) {
+            estadosCidades.uf = infoEstados.sigla
+            estadosCidades.descricao = infoEstados.nome
+            estadosCidades.quantidade_cidades = infoEstados.cidades.length
+
+            infoEstados.cidades.forEach (function (nomeCidade){
+                cidade.push(nomeCidade.nome)
+            })
+        }
+    })
+
+    return estadosCidades
+
+}
+
+module.exports = {
+    getCapitalEstado,
+    getListaDeEstados,
+    getDadosEstado,
+    getEstadosRegiao,
+    getCidades
+}
