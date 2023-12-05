@@ -66,7 +66,6 @@ const getCapitalEstado = function (sigla) {
 
 }
 
-
 const getEstadosRegiao = function (regiao) {
 
     const regiaos = regiao.toUpperCase()
@@ -94,6 +93,33 @@ const getEstadosRegiao = function (regiao) {
 
 }
 
+const getCapitalPais = function () {
+    let estadosCapital = {}
+    let capital = []
+
+    arrayEstado.forEach(function(capital){
+        if(capital.capital_pais != undefined){
+
+            const paisCapital = {}
+
+
+            paisCapital.capital_atual = capital.capital_pais.capital
+            paisCapital.uf = capital.sigla
+            paisCapital.descricao = capital.nome
+            paisCapital.capital = capital.capital
+            paisCapital.regiao = capital.regiao
+            paisCapital.capital_pais_ano_inicio = capital.capital_pais.ano_inicio
+            paisCapital.capital_pais_ano_termino = capital.capital_pais.ano_fim
+
+            capital.push(paisCapital)
+        }
+
+        estadosCapital.capitais = capital
+    })
+
+    return estadosCapital
+}
+
 const getCidades = function (sigla) {
     const estado = jsonEstados.estadosCidades.estados
     let siglas = sigla.toUpperCase
@@ -111,6 +137,8 @@ const getCidades = function (sigla) {
             infoEstados.cidades.forEach (function (nomeCidade){
                 cidade.push(nomeCidade.nome)
             })
+
+            infoEstados.cidades = cidade
         }
     })
 
@@ -119,9 +147,10 @@ const getCidades = function (sigla) {
 }
 
 module.exports = {
-    getCapitalEstado,
     getListaDeEstados,
     getDadosEstado,
+    getCapitalEstado,
     getEstadosRegiao,
+    getCapitalPais,
     getCidades
 }
